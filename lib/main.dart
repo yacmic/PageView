@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 
 import 'p_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const PView());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool? decision = prefs.getBool('x');
+
+  Widget _screen = (decision == false || decision == null) ? PView() : MyApp();
+  runApp(_screen);
 }
 
 class MyApp extends StatelessWidget {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Data {
   final String title;
@@ -112,12 +113,12 @@ class _PViewState extends State<PView> {
                 onPageChanged: (val) {
                   setState(() {
                     _currentIndex = val;
-                    if (_currentIndex == 3) {
-                      Future.delayed(
-                        Duration(seconds: 3),
-                        () => Navigator.of(ctx).pushNamed('/a'),
-                      );
-                    }
+                    // if (_currentIndex == 3) {
+                    //   Future.delayed(
+                    //     Duration(seconds: 3),
+                    //     () => Navigator.of(ctx).pushNamed('/a'),
+                    //   );
+                    // }
                   });
                 },
               ),
@@ -141,8 +142,12 @@ class _PViewState extends State<PView> {
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(Colors.black),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             Navigator.of(ctx).pushReplacementNamed('/a');
+
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setBool('x', true);
                           },
                         ),
                       ),
